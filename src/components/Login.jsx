@@ -6,8 +6,12 @@ import { addUser } from "../utils/redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const [email, setEmail] = useState("rohit.s@gmail.com");
-  const [password, setPassword] = useState("Rohit@123");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +25,27 @@ export const Login = () => {
       dispatch(addUser(response?.data?.data));
       navigate("/");
     } catch (err) {
-      alert(err?.response?.data?.error);
+      alert(
+        err?.response?.data?.error || err?.message || "Something Went Wrong"
+      );
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const signIn = await axios.post(`${BASE_URL}/signin`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+
+      alert(signIn?.data?.message);
+      setIsLogin(true);
+    } catch (err) {
+      alert(
+        err?.response?.data?.error || err?.message || "Something Went Wrong"
+      );
     }
   };
 
@@ -29,10 +53,42 @@ export const Login = () => {
     <div className="flex justify-center my-20">
       <div className="card bg-base-300 w-96 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title justify-center">Login..!</h2>
+          <h2 className="card-title justify-center">
+            {isLogin ? "Login..!" : "Sign Up"}
+          </h2>
+          {!isLogin && (
+            <>
+              <label className="form-control w-full max-w-xs my-2">
+                <div className="label">
+                  <span className="label-text">First Name:</span>
+                </div>
+                <div className="input input-bordered flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="grow"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+              </label>
+              <label className="form-control w-full max-w-xs my-2">
+                <div className="label">
+                  <span className="label-text">Last Name:</span>
+                </div>
+                <div className="input input-bordered flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="grow"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+              </label>
+            </>
+          )}
           <label className="form-control w-full max-w-xs my-2">
             <div className="label">
-              <span className="label-text">Email ID</span>
+              <span className="label-text">Email ID:</span>
             </div>
             <div className="input input-bordered flex items-center gap-2">
               <svg
@@ -54,7 +110,7 @@ export const Login = () => {
           </label>
           <label className="form-control w-full max-w-xs my-2">
             <div className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text">Password:</span>
             </div>
             <div className="input input-bordered flex items-center gap-2">
               <svg
@@ -70,18 +126,28 @@ export const Login = () => {
                 />
               </svg>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="grow"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <input
+                type="checkbox"
+                onClick={(e) => setShowPassword(e?.target?.checked)}
+              />
             </div>
           </label>
           <div className="card-actions justify-center my-4">
-            <button className="btn btn-primary w-full" onClick={handleLogin}>
-              Login
+            <button
+              className="btn btn-primary w-full"
+              onClick={isLogin ? handleLogin : handleSignUp}
+            >
+              {isLogin ? "Login" : "Sign Up"}
             </button>
           </div>
+          <p className="cursor-pointer" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "New User, Sign Up Here" : "Existing User, Log In Here"}
+          </p>
         </div>
       </div>
     </div>

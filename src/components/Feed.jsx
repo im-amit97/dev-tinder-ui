@@ -8,6 +8,7 @@ import { UserCard } from "./UserCard";
 export const Feed = () => {
   const feeds = useSelector((store) => store.feed);
   const dispatch = useDispatch();
+
   const fetchFeed = async () => {
     try {
       const feed = await axios.get(`${BASE_URL}/user/feed`, {
@@ -30,7 +31,7 @@ export const Feed = () => {
   if (feeds.length === 0) {
     return (
       <div className="flex justify-center items-center my-20 font-extrabold">
-        No Match Available
+        No New Devloper Available
       </div>
     );
   }
