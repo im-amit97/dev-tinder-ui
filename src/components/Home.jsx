@@ -17,7 +17,7 @@ export const Home = () => {
       const user = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
-      dispatch(addUser(user?.data));
+      dispatch(addUser(user?.data?.data));
     } catch (err) {
       navigate("/login");
     }

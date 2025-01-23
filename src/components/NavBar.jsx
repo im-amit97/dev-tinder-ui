@@ -27,8 +27,10 @@ export const NavBar = () => {
         </Link>
       </div>
       {user && (
-        <div className="flex-none gap-2 mx-4">
+        <div className="flex-none gap-2">
           <div className="dropdown dropdown-end">
+            <div className="flex justify-center items-center">
+            <h3 className="mx-4">Welcome, {user?.firstName}</h3>
             <div
               tabIndex={0}
               role="button"
@@ -40,6 +42,7 @@ export const NavBar = () => {
                   src={user?.photoUrl ?? DEFAULT_URL}
                 />
               </div>
+            </div>
             </div>
             <ul
               tabIndex={0}
