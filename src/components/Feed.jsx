@@ -22,6 +22,18 @@ export const Feed = () => {
   useEffect(() => {
     fetchFeed();
   }, []);
+
+  if (!feeds) {
+    return <div>Something went wrong...!</div>;
+  }
+
+  if (feeds.length === 0) {
+    return (
+      <div className="flex justify-center items-center my-20 font-extrabold">
+        No Match Available
+      </div>
+    );
+  }
   return (
     <div className="flex justify-center my-10">
       {feeds && <UserCard user={feeds[0]} />}

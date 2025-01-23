@@ -30,19 +30,19 @@ export const NavBar = () => {
         <div className="flex-none gap-2">
           <div className="dropdown dropdown-end">
             <div className="flex justify-center items-center">
-            <h3 className="mx-4">Welcome, {user?.firstName}</h3>
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Devloper profile pic"
-                  src={user?.photoUrl ?? DEFAULT_URL}
-                />
+              <h3 className="mx-4">Welcome, {user?.firstName}</h3>
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Devloper profile pic"
+                    src={user?.photoUrl ?? DEFAULT_URL}
+                  />
+                </div>
               </div>
-            </div>
             </div>
             <ul
               tabIndex={0}
@@ -55,7 +55,14 @@ export const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/connections" className="justify-between">
+                  Connections
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests" className="justify-between">
+                  Requests
+                </Link>
               </li>
               <li>
                 <a to="/login" onClick={handleLogout}>
